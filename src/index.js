@@ -1,7 +1,9 @@
 const port = 3333
+require('./models/Users')
 const express = require('express')
 const mongoUri = require('../mongo')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const authRoutes = require('./routes/authRoutes')
 
 mongoose.connect(mongoUri, {
@@ -20,6 +22,7 @@ mongoose.connection.on('error', err => {
 
 const app = express()
 
+app.use(bodyParser.json()) // must be first
 app.use(authRoutes)
 
 app.get('/', (_, res) => {
