@@ -1,10 +1,8 @@
 const port = 3333
-
 const express = require('express')
-
 const mongoUri = require('../mongo')
-
 const mongoose = require('mongoose')
+const authRoutes = require('./routes/authRoutes')
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
@@ -21,6 +19,8 @@ mongoose.connection.on('error', err => {
 })
 
 const app = express()
+
+app.use(authRoutes)
 
 app.get('/', (_, res) => {
     res.send('hellow')
