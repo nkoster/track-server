@@ -6,6 +6,20 @@ const mongoUri = require('../mongo')
 
 const mongoose = require('mongoose')
 
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+})
+
+mongoose.connection.on('connected', _ => {
+    console.log('connected to mongodb')
+})
+
+mongoose.connection.on('error', err => {
+    console.error(err)
+})
+
 const app = express()
 
 app.get('/', (_, res) => {
