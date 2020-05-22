@@ -5,6 +5,7 @@ const mongoUri = require('../mongo')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/authRoutes')
+const requireAuth = require('./middleware/requireAuth')
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
@@ -25,8 +26,8 @@ const app = express()
 app.use(bodyParser.json()) // must be first
 app.use(authRoutes)
 
-app.get('/', (_, res) => {
-    res.send('hellow')
+app.get('/', requireAuth, (req, res) => {
+    res.send(`Your email is ${req.user.email}`)
 })
 
 app.listen(port, _ => {
