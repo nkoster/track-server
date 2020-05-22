@@ -1,5 +1,5 @@
 const port = 3333
-require('./models/Users')
+require('./models/User')
 const express = require('express')
 const mongoUri = require('../mongo')
 const mongoose = require('mongoose')
