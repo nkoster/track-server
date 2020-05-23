@@ -6,6 +6,7 @@ const User = mongoose.model('User')
 const signKey = require('../../sign-key')
 
 router.post('/signup', async (req, res) => {
+    console.log('SIGNUP')
     const { email, password } = req.body
     try {
         const user = new User({ email, password })
@@ -13,11 +14,12 @@ router.post('/signup', async (req, res) => {
         const token = jwt.sign({ userId: user._id }, signKey)
         res.send({ token })
     } catch(err) {
-        return res.status(422).send(err.message)
+        return res.status(422).send({ error: 'Already in use' })
     }
 })
 
 router.post('/signin', async (req, res) => {
+    console.log('SIGNIN')
     const { email, password } = req.body
     if( !email || !password) {
         return res.status(422).send({ error: 'Must provide email and password' })
