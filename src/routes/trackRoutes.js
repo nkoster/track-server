@@ -11,10 +11,12 @@ router.use(requireAuth)
 router.get('/tracks', async (req, res) => {
     const tracks = await Track.find({ userId: req.user._id })
     res.send(tracks)
+    console.log('TRACKS')
 })
 
 router.post('/track', async (req, res) => {
     const { name, locations } = req.body
+    console.log('TRACK')
     if (!name || !locations) {
         return res.status(422).send({ error: 'Not enough data'})
     }
@@ -28,6 +30,7 @@ router.post('/track', async (req, res) => {
 })
 
 router.post('/delete', async (req, res) => {
+    console.log('DELETE')
     try {
     await Track.deleteOne({ _id: req.body.id })
     } catch(err) {
