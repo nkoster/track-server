@@ -32,10 +32,11 @@ router.post('/track', async (req, res) => {
 router.post('/delete', async (req, res) => {
     console.log('DELETE')
     try {
-    await Track.deleteOne({ _id: req.body.id })
+        await Track.deleteOne({ _id: req.body.id })
     } catch(err) {
-        res.status(422).send({ error: err.message })
+        return res.status(422).send({ error: err.message })
     }
+    return res.send('track deleted')
 })
 
 module.exports = router
