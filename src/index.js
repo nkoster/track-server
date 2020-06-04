@@ -25,12 +25,9 @@ mongoose.connection.on('error', err => {
 
 const app = express()
 
-bodyParser = {
-    json: {limit: '50mb', extended: true},
-    urlencoded: {limit: '50mb', extended: true}
-}
-
-app.use(bodyParser.json()) // must be first
+app.use(bodyParser.json({
+    limit: '50mb',
+    type: 'application/json'})) // bodyParser must be first
 app.use(authRoutes)
 app.use(trackRoutes)
 
