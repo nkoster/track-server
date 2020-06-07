@@ -21,6 +21,10 @@ const trackSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    distance: {
+        type: Number,
+        default: 0
+    },
     locations: [ pointsSchema ]
 })
 
