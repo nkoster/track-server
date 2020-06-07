@@ -15,13 +15,13 @@ router.get('/tracks', async (req, res) => {
 })
 
 router.post('/track', async (req, res) => {
-    const { name, locations } = req.body
+    const { name, locations, distance } = req.body
     console.log('TRACK')
     if (!name || !locations) {
         return res.status(422).send({ error: 'Not enough data'})
     }
     try {
-        const track = new Track({ name, locations, userId: req.user._id })
+        const track = new Track({ name, locations, distance, userId: req.user._id })
         await track.save()
         res.send(track)
     } catch(err) {
