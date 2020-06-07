@@ -15,6 +15,7 @@ router.get('/tracks', async (req, res) => {
 })
 
 router.post('/track', async (req, res) => {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
     const { name, locations, distance } = req.body
     console.log('TRACK')
     if (!name || !locations) {
@@ -23,6 +24,7 @@ router.post('/track', async (req, res) => {
     try {
         const track = new Track({ name, locations, distance, userId: req.user._id })
         await track.save()
+        await sleep(500)
         res.send(track)
     } catch(err) {
         res.status(422).send({ error: err.message })
