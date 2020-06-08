@@ -28,8 +28,8 @@ const app = express()
 
 app.use(bodyParser.json({
     limit: '50mb',
-    type: 'application/json'})) // bodyParser must be first
-app.use(authRoutes, cors())
+    type: 'application/json'}), cors()) // bodyParser must be first
+app.use(authRoutes)
 app.use(trackRoutes)
 
 app.get('/', requireAuth, (req, res) => {
