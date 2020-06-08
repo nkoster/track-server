@@ -29,9 +29,9 @@ const app = express()
 app.use(bodyParser.json({
     limit: '50mb',
     type: 'application/json'})) // bodyParser must be first
-app.use(cors)
 app.use(authRoutes)
 app.use(trackRoutes)
+app.use(cors)
 
 app.get('/', requireAuth, (req, res) => {
     res.send(`Your email is ${req.user.email}`)
