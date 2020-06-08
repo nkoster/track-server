@@ -2,6 +2,7 @@ const port = 3333
 require('./models/User')
 require('./models/Track')
 const express = require('express')
+const cors = require('cors')
 const mongoUri = require('../mongo')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
