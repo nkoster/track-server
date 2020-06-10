@@ -41,4 +41,14 @@ router.post('/delete', async (req, res) => {
     return res.send('track deleted')
 })
 
+router.post('/getstreamie', async (req, res) => {
+    console.log('GETSTREAMY')
+    try {
+        await console.log('reading NGINX')
+    } catch(err) {
+        return res.status(422).send({ error: err.message })
+    }
+    return res.send('getstreamie finished')
+})
+
 module.exports = router
