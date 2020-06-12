@@ -1,9 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const requireAuth = require('../middleware/requireAuth')
-
+const fs = require('fs')
 const Track = mongoose.model('Track')
-
 const router = express.Router()
 
 router.use(requireAuth)
@@ -41,14 +40,22 @@ router.post('/delete', async (req, res) => {
     return res.send('track deleted')
 })
 
-router.post('/getstreamie', async (req, res) => {
-    console.log('GETSTREAMY')
+router.get('/getstreamie', async (req, res) => {
+    console.log('GETSTREAMIE')
     try {
-        await console.log('reading NGINX')
+        const data = await fs.readFileSync('/home/niels/src/js/streamie/dronestream.conf', 'utf8')
+        const raw = data.split('\n')
+        const streamUser = raw[0].split(' ')[1]
+        const youtubeKey = raw[3].split('/')[4].split(';')[0]
+        const facebookKey = raw[4].split('/')[4].split(';')[0]
+        const twitchKey = raw[5].split('/')[4].split(';')[0]
+        res.send({
+            streamUser, youtubeKey, twitchKey, facebookKey
+        })
     } catch(err) {
         return res.status(422).send({ error: err.message })
     }
-    return res.send('getstreamie finished')
+    //return res.send('getstreamie finished')
 })
 
 module.exports = router
