@@ -43,7 +43,7 @@ router.post('/delete', async (req, res) => {
 router.get('/getstreamie', async (req, res) => {
     console.log('GETSTREAMIE')
     try {
-        const data = await fs.readFileSync('/slot/home/w3b/streamie/dronestream.conf', 'utf8')
+        const data = await fs.readFileSync('/slot/home/w3b/streamie/teststream.conf', 'utf8')
         const raw = data.split('\n')
         const streamUser = raw[0].split(' ')[1]
         const youtubeKey = raw[3].split('/')[4].split(';')[0]
@@ -59,9 +59,22 @@ router.get('/getstreamie', async (req, res) => {
 })
 
 router.post('/putstreamie', async (req, res) => {
-    console.log('PUTSTREAMIE')
+    const {
+        streamUser,
+        youtube, youtubeActive,
+        twitch, twitchActive,
+        facebook, facebookActive
+    } = req.body
     try {
-        await console.log(req.body)
+        const nginxConf =
+`application ${streamUser} {
+    live on;
+    record off;
+    ${youtubeActive ? '' : '#'}push rtmp://a.rtmp.youtube.com/live2/${youtube};
+    ${facebookActive ? '' : '#'}push rtmp://localhost:19350/rtmp/${facebook};
+    ${twitchActive ? '' : '#'}push rtmp://live-ams.twitch.tv/app/${twitch};
+}`
+        console.log(nginxConf)
     } catch(err) {
         return res.status(422).send({ error: err.message })
     }
