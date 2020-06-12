@@ -43,19 +43,29 @@ router.post('/delete', async (req, res) => {
 router.get('/getstreamie', async (req, res) => {
     console.log('GETSTREAMIE')
     try {
-        const data = await fs.readFileSync('/home/niels/src/js/streamie/dronestream.conf', 'utf8')
+        const data = await fs.readFileSync('/slot/home/w3b/streamie/dronestream.conf', 'utf8')
         const raw = data.split('\n')
         const streamUser = raw[0].split(' ')[1]
         const youtubeKey = raw[3].split('/')[4].split(';')[0]
         const facebookKey = raw[4].split('/')[4].split(';')[0]
         const twitchKey = raw[5].split('/')[4].split(';')[0]
-        res.send({
+        return res.send({
             streamUser, youtubeKey, twitchKey, facebookKey
         })
     } catch(err) {
         return res.status(422).send({ error: err.message })
     }
     //return res.send('getstreamie finished')
+})
+
+router.post('/putstreamie', async (req, res) => {
+    console.log('PUTSTREAMIE')
+    try {
+        await console.log(req.body)
+    } catch(err) {
+        return res.status(422).send({ error: err.message })
+    }
+    return res.send('streamie update')
 })
 
 module.exports = router
