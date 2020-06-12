@@ -52,7 +52,6 @@ router.get('/getstreamie', async (req, res) => {
         const twitchUsed = raw[5].split('/')[0].includes('#') ? false : true
         const facebookKey = raw[4].split('/')[4].split(';')[0]
         const facebookUsed = raw[4].split('/')[0].includes('#') ? false : true
-        // console.log(youtubeActive, twitchActive, facebookActive)
         return res.send({
             streamUser,
             youtubeKey, youtubeUsed,
@@ -62,7 +61,6 @@ router.get('/getstreamie', async (req, res) => {
     } catch(err) {
         return res.status(422).send({ error: err.message })
     }
-    //return res.send('getstreamie finished')
 })
 
 router.post('/putstreamie', async (req, res) => {
