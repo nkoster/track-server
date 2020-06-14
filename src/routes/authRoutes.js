@@ -31,7 +31,7 @@ router.post('/signin', async (req, res) => {
     try {
         await user.comparePassword(password)
         const token = jwt.sign({ userId: user._id }, signKey)
-        res.send({ token })
+        res.send({ token, streamUser: user.streamUser ? user.streamUser : '' })
     } catch(err) {
         return res.status(422).send({ error: 'Forbidden' })
     }
