@@ -40,12 +40,13 @@ router.post('/delete', async (req, res) => {
     return res.send('track deleted')
 })
 
-router.get('/getstreamie', async (req, res) => {
+router.get('/getstreamie/:streamUser', async (req, res) => {
     console.log('GETSTREAMIE')
+    const { streamUser } = req.params
+    console.log(streamUser)
     try {
-        const data = await fs.readFileSync('/slot/home/w3b/streamie/nginx/teststream.conf', 'utf8')
+        const data = await fs.readFileSync(`/slot/home/w3b/streamie/nginx/${streamUser}.conf`, 'utf8')
         const raw = data.split('\n')
-        const streamUser = raw[0].split(' ')[1]
         const youtubeKey = raw[3].split('/')[4].split(';')[0]
         const youtubeUsed = raw[3].split('/')[0].includes('#') ? false : true
         const twitchKey = raw[5].split('/')[4].split(';')[0]
@@ -80,7 +81,7 @@ router.post('/putstreamie', async (req, res) => {
     ${twitchActive ? '' : '#'}push rtmp://live-ams.twitch.tv/app/${twitch};
 }`
         console.log(nginxConf)
-        await fs.writeFileSync('/slot/home/w3b/streamie/nginx/teststream.conf', nginxConf, 'utf8')
+        await fs.writeFileSync(`/slot/home/w3b/streamie/nginx/${streamUser}.conf`, nginxConf, 'utf8')
         return res.send('streamie update')
     } catch(err) {
         return res.status(422).send({ error: err.message })
