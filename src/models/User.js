@@ -12,8 +12,9 @@ const userSchema = mongoose.Schema({
         required: true
     },
     streamUser: {
-        type: String
-    }
+        type: String,
+        unique: true,
+        required: true    }
 })
 
 userSchema.pre('save', function(next) {
