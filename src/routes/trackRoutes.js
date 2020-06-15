@@ -79,7 +79,8 @@ router.post('/putstreamie', async (req, res) => {
     ${youtubeActive ? '' : '#'}push rtmp://a.rtmp.youtube.com/live2/${youtube};
     ${facebookActive ? '' : '#'}push rtmp://localhost:19350/rtmp/${facebook};
     ${twitchActive ? '' : '#'}push rtmp://live-ams.twitch.tv/app/${twitch};
-}`
+}
+`
         console.log(nginxConf)
         await fs.writeFileSync(`/slot/home/w3b/streamie/nginx/${streamUser}.conf`, nginxConf, 'utf8')
         return res.send('streamie update')
