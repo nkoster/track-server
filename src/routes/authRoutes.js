@@ -7,9 +7,9 @@ const signKey = require('../../sign-key')
 
 router.post('/signup', async (req, res) => {
     console.log('SIGNUP')
-    const { email, password } = req.body
+    const { email, password, streamUser } = req.body
     try {
-        const user = new User({ email, password })
+        const user = new User({ email, password, streamUser: streamUser ? streamUser : email})
         await user.save()
         const token = jwt.sign({ userId: user._id }, signKey)
         res.send({ token })
